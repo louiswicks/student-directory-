@@ -21,11 +21,25 @@ def print_header
   puts "The students of the Villain Academy"
   puts "----------------------------------"
 end
-def print(names)
-  names.each do |name|
-    puts "#{name[:name]} (#{name[:cohort]} cohort)"
+def print(students)
+  students.each_with_index do |student, index|
+    puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)"
   end
+  puts "Student names beginning with: (Please enter a letter)"
+  letter = gets.chomp
+  number_of_matches = 0
+  students.each do |student|
+    if student[:name].start_with?(letter.upcase, letter.downcase)
+      puts "#{student[:name]} (#{student[:cohort]} cohort)"
+      number_of_matches += 1
+    else
+    end
+  end
+  puts
+  puts "We have #{number_of_matches} students whose name begin with #{letter}"
+  puts
 end
+
 #Printed a total student count
 def print_footer(names)
   puts "Overall, we have #{names.count} great students"
