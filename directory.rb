@@ -1,7 +1,7 @@
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
-  #create an empty arraty
+  #create an empty array
   students = []
   #get the first name
   name = gets.chomp
@@ -13,39 +13,35 @@ def input_students
     #get another name from the user
     name = gets.chomp
   end
-  #return array of students
+  #return the array of students
   students
 end
-# and then print them
 def print_header
-  puts "The students of the Villain Academy"
-  puts "----------------------------------"
+  puts "The students of Villains Academy"
+  puts "-------------"
 end
-def print(students)
-  students.each_with_index do |student, index|
-    puts "#{index+1}. #{student[:name]} (#{student[:cohort]} cohort)"
-  end
-  puts "Student names beginning with: (Please enter a letter)"
-  letter = gets.chomp
+
+def print_by_name_length(students)
+  puts "Names with maximum characters of: (Please enter a number)"
+  max_length = gets.chomp
   number_of_matches = 0
   students.each do |student|
-    if student[:name].start_with?(letter.upcase, letter.downcase)
+    if student[:name].length <= max_length.to_i
       puts "#{student[:name]} (#{student[:cohort]} cohort)"
       number_of_matches += 1
     else
     end
   end
   puts
-  puts "We have #{number_of_matches} students whose name begin with #{letter}"
+  puts "We have #{number_of_matches} students with a name of maximum #{max_length} characters"
   puts
 end
 
-#Printed a total student count
-def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
+def print_footer(students)
+  puts "Overall, we have #{students.count} great students"
 end
-
+#call the methods
 students = input_students
 print_header
-print(students)
+print_by_name_length(students)
 print_footer(students)
