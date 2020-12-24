@@ -16,26 +16,20 @@ def input_students
   #return the array of students
   students
 end
+
 def print_header
   puts "The students of Villains Academy"
   puts "-------------"
 end
 
-def print_by_name_length(students)
-  puts "Names with maximum characters of: (Please enter a number)"
-  max_length = gets.chomp
-  number_of_matches = 0
-  students.each do |student|
-    if student[:name].length <= max_length.to_i
-      puts "#{student[:name]} (#{student[:cohort]} cohort)"
-      number_of_matches += 1
-    else
-    end
+def print_with_while(students)
+  i = 0
+  while i < students.count
+    puts "#{students[i][:name]} (#{students[i][:cohort]})"
+  i += 1
   end
-  puts
-  puts "We have #{number_of_matches} students with a name of maximum #{max_length} characters"
-  puts
 end
+
 
 def print_footer(students)
   puts "Overall, we have #{students.count} great students"
@@ -43,5 +37,5 @@ end
 #call the methods
 students = input_students
 print_header
-print_by_name_length(students)
+print_with_while(students)
 print_footer(students)
