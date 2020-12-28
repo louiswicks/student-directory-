@@ -56,7 +56,7 @@ def print_header
 end
 
 # 8.12
-def print(students)
+def print_students_list(students)
   if students.empty?
     puts "No students available".center(@width)
   else
@@ -118,30 +118,37 @@ def print_footer(students)
   end
 end
 
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+end
+
+def show_student
+  print_header
+  print_students_list(@students)
+  print_footer(@students)
+end
+
+def process(selection)
+  case selection
+  when "1"
+    input_students
+  when "2"
+    show_student
+  when "9"
+    exit
+  else
+    puts "I don't know what you mean. Try again."
+  end
+end
+
 #creating the interactive menu
 
 def interactive_menu
-  students = []
   loop do
-# 1. print the menu and ask for input
-    puts "1. Input the students"
-    puts "2. Show the students"
-    puts "9. Exit"
-# 2. read the input and save it into a variable
-    selection = gets.chomp
-# 3. do what the user has asked
-    case selection
-    when "1"
-      students = input_students
-    when "2"
-      print_header
-      print(students)
-      print_footer(students)
-    when "9"
-      exit
-    else
-      puts "I don't know what you mean. Try again."
-    end
+    print_menu
+    process(gets.chomp)
   end
 end
 
