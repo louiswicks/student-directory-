@@ -7,7 +7,7 @@
 # 8.5
 def create_new_student
   puts "Do you want to create a new student? (y/n)".center(@width)
-  continue = gets.chomp.downcase
+  continue = STDIN.gets.chomp.downcase
   if continue == "y"
     return true
   elsif continue == "n"
@@ -22,9 +22,9 @@ def input_students
   continue = create_new_student
   while continue
     puts "Please enter the name of the student".center(@width)
-    name = gets.chomp
+    name = STDIN.gets.chomp
     puts "Please enter the cohort".center(@width)
-    cohort = gets.chomp
+    cohort = STDIN.gets.chomp
     puts "Please enter the country of birth".center(@width)
     country_of_birth = gets.chomp
     hobbies = add_hobbies
@@ -39,10 +39,10 @@ def add_hobbies
   hobbies = []
   puts "Please enter student's hobbies".center(@width)
   puts "(To finish, just hit return twice)".center(@width)
-  hobby = gets.chomp
+  hobby = STDIN.gets.chomp
   while !hobby.empty?
     hobbies << hobby
-    hobby = gets.chomp
+    hobby = STDIN.gets.chomp
   end
   hobbies
 end
@@ -122,6 +122,7 @@ def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Save the list to the students.csv"
+  puts "4. Load the list from students.csv"
   puts "9. Exit"
 end
 
@@ -139,6 +140,8 @@ def process(selection)
     show_student
   when "3"
     save_students
+  when "4"
+    load_students
   when "9"
     exit
   else
@@ -165,9 +168,31 @@ end
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
+  end
+end
+
+def load_students(filename = "students.csv")
+  file = File.open("students.csv", "r")
+  file.readlines.each do |line|
+  name, cohort = line.chomp.split(',')
+    @students << {name: name, cohort: cohort.to_sym}
+  end
+  file.close
+end
+
+def try_load_students
+  filename = ARGV.first
+  return if filename.nil?
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry #{filename} doesn't exist."
+    exit
   end
 end
 
 #call the methods
+try_load_students
 interactive_menu
