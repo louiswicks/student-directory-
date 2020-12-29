@@ -28,7 +28,7 @@ def input_students
     puts "Please enter the country of birth".center(@width)
     country_of_birth = gets.chomp
     hobbies = add_hobbies
-    @students << { name: name, cohort: cohort.to_sym, country_of_birth: country_of_birth, hobbies: hobbies }
+    adding_students(name, cohort, country_of_birth, hobbies)
     puts "Now we have #{@students.count} students".center(@width)
     continue = create_new_student
   end
@@ -176,7 +176,7 @@ def load_students(filename = "students.csv")
   file = File.open("students.csv", "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+  adding_students(name, cohort)
   end
   file.close
 end
@@ -192,6 +192,11 @@ def try_load_students
     exit
   end
 end
+
+def adding_students(name, cohort)
+  @students << { name: name, cohort: cohort.to_sym}
+end
+
 
 #call the methods
 try_load_students
